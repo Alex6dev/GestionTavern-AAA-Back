@@ -1,6 +1,5 @@
 package aaa.tavern.controller;
 
-import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -11,8 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-import aaa.tavern.dto.InventoryManagerIngredientDto;
-
+import aaa.tavern.dto.ManagerDto;
 import aaa.tavern.dto.received.ShopIngredientDto;
 import aaa.tavern.exception.ForbiddenException;
 import aaa.tavern.service.ShopService;
@@ -34,7 +32,7 @@ public class ShopController {
      *                                 creation of this revenue
      */
     @PostMapping("/shop/ShopBying")
-    public List<InventoryManagerIngredientDto> byingIngredient(@RequestBody ShopIngredientDto shopIngredientDto) {
+    public ManagerDto byingIngredient(@RequestBody ShopIngredientDto shopIngredientDto) {
         try {
             return shopService.prepareIngredientAndBuy(shopIngredientDto);
         } catch (EntityNotFoundException e) {
@@ -60,7 +58,7 @@ public class ShopController {
      *                                 creation of this revenue
      */
     @PostMapping("/shop/ShopSelling")
-    public List<InventoryManagerIngredientDto> sellingIngredient(@RequestBody ShopIngredientDto shopIngredientDto) {
+    public ManagerDto sellingIngredient(@RequestBody ShopIngredientDto shopIngredientDto) {
         try {
             return shopService.prepareIngredientAndSell(shopIngredientDto);
 

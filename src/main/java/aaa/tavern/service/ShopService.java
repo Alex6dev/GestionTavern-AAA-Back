@@ -13,7 +13,6 @@ import aaa.tavern.dao.IngredientRepository;
 import aaa.tavern.dao.InventoryIngredientRepository;
 import aaa.tavern.dao.ManagerRepository;
 import aaa.tavern.dto.IngredientDto;
-import aaa.tavern.dto.InventoryManagerIngredientDto;
 import aaa.tavern.dto.ManagerDto;
 import aaa.tavern.dto.received.ShopIngredientDto;
 import aaa.tavern.dto.received.ShopIngredientQuantityDto;
@@ -71,7 +70,7 @@ public class ShopService {
      */
     // charge le manager et l'ingredient pour acheter et ajouter ce dernier dans
     // l'inventaire
-    public List<InventoryManagerIngredientDto> prepareIngredientAndBuy(ShopIngredientDto shopIngredientDto)
+    public ManagerDto prepareIngredientAndBuy(ShopIngredientDto shopIngredientDto)
             throws Exception {
         Manager manager = ServiceUtil.getEntity(managerRepository, shopIngredientDto.getIdManager());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -91,8 +90,8 @@ public class ShopService {
                 Add(ingredient, manager, shopIngredientQuantity[i].getQuantity());
             }
             managerRepository.save(manager);
-            ManagerDto managerDto = new ManagerDto(manager);
-            return managerDto.getIngredientQuantity();
+
+            return new ManagerDto(manager);
         } else {
             throw new Exception("Ce manager ne correspond pas a votre compte");
         }
@@ -109,7 +108,7 @@ public class ShopService {
      */
     // Charge le manager et l'ingredient vendre et retirer ce dernier de
     // l'inventaire
-    public List<InventoryManagerIngredientDto> prepareIngredientAndSell(ShopIngredientDto shopIngredientDto)
+    public ManagerDto prepareIngredientAndSell(ShopIngredientDto shopIngredientDto)
             throws Exception {
         Manager manager = ServiceUtil.getEntity(managerRepository, shopIngredientDto.getIdManager());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -132,8 +131,8 @@ public class ShopService {
             }
 
             managerRepository.save(manager);
-            ManagerDto managerDto = new ManagerDto(manager);
-            return managerDto.getIngredientQuantity();
+
+            return new ManagerDto(manager);
         } else {
             throw new Exception("Ce manager ne correspond pas a votre compte");
         }
